@@ -1,5 +1,9 @@
 import * as actionType from "../../constants/user/userConstant";
-const initState = {};
+const initState = {
+  isLogin: true,
+  token: "",
+  role: "shop",
+};
 
 export const userReducer = (state = initState, action) => {
   switch (action.type) {
