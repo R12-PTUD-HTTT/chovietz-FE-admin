@@ -84,12 +84,12 @@ export default function SignupShipper() {
                                                 <div className="row">
                                                     <label className="form-label">Giới tính</label>
                                                     <div class="form-check mb-3 col">
-                                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1"/>
-                                                            <label class="custom-control-label" for="customRadio1">Nam</label>
+                                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio1" />
+                                                        <label class="custom-control-label" for="customRadio1">Nam</label>
                                                     </div>
                                                     <div class="form-check col">
-                                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2"/>
-                                                            <label class="custom-control-label" for="customRadio2">Nữ</label>
+                                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="customRadio2" />
+                                                        <label class="custom-control-label" for="customRadio2">Nữ</label>
                                                     </div>
                                                 </div>
                                                 <div className="input-group input-group-outline mb-3">
@@ -104,9 +104,15 @@ export default function SignupShipper() {
                                                     <label className="form-label">Địa chỉ hiện tại</label>
                                                     <input type="text" class="form-control" />
                                                 </div>
-                                                <div className="input-group input-group-outline mb-3">
-                                                    <label className="form-label">Khu vực muốn đăng ký làm việc</label>
-                                                    <input type="text" class="form-control" />
+                                                <div class="input-group input-group-static mb-4">
+                                                    <label for="exampleFormControlSelect1" class="ms-0">Khu vực muốn đăng ký làm việc</label>
+                                                    <select class="form-control" id="exampleFormControlSelect1">
+                                                        <option>Quận 1</option>
+                                                        <option>Quận 2</option>
+                                                        <option>Quận 3</option>
+                                                        <option>Quận 4</option>
+                                                        <option>Quận 5</option>
+                                                    </select>
                                                 </div>
                                                 <div className="text-center">
                                                     <button type="button" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Đăng ký ứng tuyển</button>
@@ -116,7 +122,7 @@ export default function SignupShipper() {
                                         <div className="card-footer text-center pt-0 px-lg-2 px-1">
                                             <p className="mb-2 text-sm mx-auto">
                                                 Bạn đã có tài khoản?
-                                                <a href="./login" className="text-primary text-gradient font-weight-bold" style={{paddingLeft: "1rem"}}>Đăng nhập</a>
+                                                <a href="./login" className="text-primary text-gradient font-weight-bold" style={{ paddingLeft: "1rem" }}>Đăng nhập</a>
                                             </p>
                                         </div>
                                     </div>
