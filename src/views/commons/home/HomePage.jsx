@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { fetchLogin } from "../../../api/userApi";
+import { setPageHeder } from "../../../redux/actions/pageAction";
 
 function HomePage(props) {
   // useEffect(() => {
@@ -9,7 +10,7 @@ function HomePage(props) {
   //   });
   //   console.log(response);
   // }, []);
-
+  setPageHeder("Dashboard");
   return (
     <>
       <h2>Home</h2>
