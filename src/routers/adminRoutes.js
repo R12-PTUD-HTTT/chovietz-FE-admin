@@ -1,11 +1,9 @@
 import Dashboard from "../views/admin/Dashboard/Dashboard";
-import LoginPage from "../views/commons/Login/LoginPage";
 
-const routes = [
+const adminRoutes = [
   {
     path: "/dashboard",
     component: () => <Dashboard />,
-    role: ["admin"],
   },
 ];
-export default routes;
+export default adminRoutes;
