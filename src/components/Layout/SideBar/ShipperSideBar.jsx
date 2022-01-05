@@ -5,7 +5,7 @@ function ShipperSideBar(props) {
   return (
     <React.Fragment>
       <aside
-        className="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark"
+        className="sidenav navbar navbar-vertical navbar-expand-xs border-0 fixed-start bg-gradient-dark"
         id="sidenav-main"
       >
         <div className="sidenav-header">
