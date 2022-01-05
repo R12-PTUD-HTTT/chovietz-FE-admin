@@ -2,7 +2,7 @@ import Dashboard from "../views/admin/Dashboard/Dashboard";
 
 const adminRoutes = [
   {
-    path: "/dashboard",
+    path: "/admin/dashboard",
     component: () => <Dashboard />,
   },
 ];

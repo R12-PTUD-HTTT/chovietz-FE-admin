@@ -7,6 +7,8 @@ import * as roles from "./constants/roles";
 import shopRoutes from "./routers/shopRoutes";
 import shipperRoutes from "./routers/shipperRoutes";
 import commonRoutes from "./routers/commonRoutes";
+import { reloadUserStore } from "./redux/actions/userAction";
+import { useDispatch } from "react-redux";
 
 const RenderPage = ({ routes, layout, role, requiredLogin }) => {
   return routes.map((route, index) => (
@@ -17,11 +19,14 @@ const RenderPage = ({ routes, layout, role, requiredLogin }) => {
       requiredLogin={requiredLogin}
       path={route.path}
       exact={route.exact !== undefined ? route.exact : true}
+      routeData={route}
       component={route.component}
     />
   ));
 };
 function App() {
+  const dispatch = useDispatch();
+  dispatch(reloadUserStore());
   const renderAdminPage = {
     routes: adminRoutes,
     layout: RoleLayout,

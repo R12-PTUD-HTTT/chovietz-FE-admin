@@ -2,10 +2,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setPageHeder } from "../../../redux/actions/pageAction";
 
-function Dashboard({}) {
+function ShipperDashboard({}) {
   const dispatch = useDispatch();
-  dispatch(setPageHeder("Addmin Dashboard"));
-  return <>Dashboard page</>;
+  dispatch(setPageHeder("Shipper Dashboard"));
+  return <React.Fragment>Shihpper Dashboard</React.Fragment>;
 }
 
-export default Dashboard;
+export default ShipperDashboard;

@@ -1,10 +1,19 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectPageHeader } from "../../../redux/selectors/page/pageSelector";
+import { removeStoredUser } from "../../../redux/actions/userAction";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function Header({}) {
   const pageTitle = useSelector(selectPageHeader);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleLogout = () => {
+    dispatch(removeStoredUser());
+    history.push("/");
+  };
   return (
     <React.Fragment>
       <nav
@@ -46,15 +55,6 @@ function Header({}) {
               </div>
             </div>
             <ul className="navbar-nav justify-content-end">
-              <li className="nav-item d-flex align-items-center">
-                <Link
-                  to=""
-                  className="nav-link text-body font-weight-bold px-0"
-                >
-                  <i className="fa fa-user me-sm-1"></i>
-                  <span className="d-sm-inline d-none">Sign In</span>
-                </Link>
-              </li>
               <li className="nav-item d-xl-none ps-3 d-flex align-items-center">
                 <Link
                   to=""
@@ -193,6 +193,16 @@ function Header({}) {
                     </Link>
                   </li>
                 </ul>
+              </li>
+              <li className="nav-item d-flex align-items-center">
+                <Link
+                  to=""
+                  className="nav-link text-body font-weight-bold px-0"
+                >
+                  <span className="d-sm-inline d-none" onClick={handleLogout}>
+                    Thoát
+                  </span>
+                </Link>
               </li>
             </ul>
           </div>
