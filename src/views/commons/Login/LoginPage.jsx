@@ -1,9 +1,56 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
+import CustomAlert from "../../../components/Alert/CustomAlert";
+import Loader from "../../../components/LoaderEffect/Loader";
+import { fetchUserLogin } from "../../../redux/actions/userAction.js";
 
 function LoginPage(props) {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [data, setData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setData({ ...data, [name]: value });
+  };
+
+  const handleSubmitLogin = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    dispatch(
+      fetchUserLogin(
+        data,
+        ({ userRole }) => {
+          history.push(`/${userRole}/dashboard`);
+        },
+        (message) => {
+          setError(message);
+          setShowAlert(true);
+        }
+      )
+    );
+    setLoading(false);
+  };
   return (
     <>
+      <CustomAlert
+        message={error}
+        isShow={showAlert}
+        onClose={setShowAlert}
+        variant="warning"
+      />
       <main className="main-content  mt-5">
         <div className="container my-auto">
           <div className="row">
@@ -34,14 +81,26 @@ function LoginPage(props) {
                   </div>
                 </div>
                 <div className="card-body">
-                  <form role="form" className="text-start">
+                  <form className="text-start" onSubmit={handleSubmitLogin}>
                     <div className="input-group input-group-outline my-3">
-                      <label className="form-label">Email</label>
-                      <input type="email" className="form-control" />
+                      <input
+                        name="username"
+                        type="text"
+                        className="form-control"
+                        onChange={handleChange}
+                        placeholder="Enter your username"
+                        value={data.username || ""}
+                      />
                     </div>
                     <div className="input-group input-group-outline mb-3">
-                      <label className="form-label">Password</label>
-                      <input type="password" className="form-control" />
+                      <input
+                        name="password"
+                        type="password"
+                        className="form-control"
+                        onChange={handleChange}
+                        value={data.password || ""}
+                        placeholder="Enter your password"
+                      />
                     </div>
                     <div className="form-check form-switch d-flex align-items-center mb-3">
                       <input
@@ -51,16 +110,19 @@ function LoginPage(props) {
                       />
                       <label
                         className="form-check-label mb-0 ms-2"
-                        for="rememberMe"
+                        htmlFor="rememberMe"
                       >
                         Remember me
                       </label>
                     </div>
                     <div className="text-center">
                       <button
-                        type="button"
                         className="btn bg-gradient-primary w-100 my-4 mb-2"
+                        type="submit"
+                        style={{ position: "relative" }}
+                        disabled={loading}
                       >
+                        {loading && <Loader />}
                         Sign in
                       </button>
                     </div>
