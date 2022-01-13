@@ -14,7 +14,7 @@ function RoleLayout(props) {
         {role === roles.shipper && <ShipperSideBar />}
         {role === roles.shop && <ShopSideBar />}
         <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-          <div className="container-fluid py-4">
+          <div className="container-fluid">
             <Header />
             <div className="row">{children}</div>
           </div>
