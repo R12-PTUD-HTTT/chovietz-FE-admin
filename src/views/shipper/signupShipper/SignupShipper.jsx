@@ -1,9 +1,59 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { fetchShippingForm } from "../../../api/userApi";
 
-export default function SignupShipper() {
+
+import CustomAlert from "../../../components/Alert/CustomAlert";
+import Loader from "../../../components/LoaderEffect/Loader";
+// import { fetchShippingSignup } from "../../../redux/actions/userAction.js";
+
+export default function SignupShipper(props) {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [data, setData] = useState({
+    fullname: "",
+    email: "",
+    address: "",
+    tel: "",
+    work_area: "",
+    gender: "",
+  });
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setData({ ...data, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    try {
+      const response = await fetchShippingForm(data);
+      console.log("das");
+        setError(response);
+        setShowAlert(true);
+    } catch (err) {
+      console.log(err);
+      setError("Có lỗi trong quá trình tải, vui lòng thử lại sau!");
+      setShowAlert(true);
+    }
+    setLoading(false);
+  };
   return (
     <>
+      <CustomAlert
+        message={error}
+        isShow={showAlert}
+        onClose={setShowAlert}
+        variant="warning"
+      />
       <main className="main-content  mt-0">
         <section>
           <div className="page-header min-vh-100">
@@ -28,37 +78,46 @@ export default function SignupShipper() {
                       </p>
                     </div>
                     <div className="card-body">
-                      <form>
+                      <form onSubmit={handleSubmit}>
                         <div className="input-group input-group-outline mb-3">
                           <label className="form-label">Họ tên</label>
-                          <input type="text" class="form-control" />
+                          <input type="text" className="form-control"
+                            name="fullname"
+                            onChange={handleChange}
+                            value={data.fullname || ""} />
                         </div>
                         <div className="row">
                           <label className="form-label">Giới tính</label>
-                          <div class="form-check mb-3 col">
+                          <div className="form-check mb-3 col">
                             <input
-                              class="form-check-input"
+                              className="form-check-input"
                               type="radio"
-                              name="flexRadioDefault"
-                              id="customRadio1"
+                              name="gender"
+                              id="1"
+                              value={"1"}
+                              checked={data.gender === "1"}
+                              onChange={handleChange}
                             />
                             <label
-                              class="custom-control-label"
-                              for="customRadio1"
+                              className="custom-control-label"
+                              htmlFor="1"
                             >
                               Nam
                             </label>
                           </div>
-                          <div class="form-check col">
+                          <div className="form-check col">
                             <input
-                              class="form-check-input"
+                              className="form-check-input"
                               type="radio"
-                              name="flexRadioDefault"
-                              id="customRadio2"
+                              name="gender"
+                              id="2"
+                              value={"2"}
+                              checked={data.gender === "2"}
+                              onChange={handleChange}
                             />
                             <label
-                              class="custom-control-label"
-                              for="customRadio2"
+                              className="custom-control-label"
+                              htmlFor="2"
                             >
                               Nữ
                             </label>
@@ -66,36 +125,50 @@ export default function SignupShipper() {
                         </div>
                         <div className="input-group input-group-outline mb-3">
                           <label className="form-label">Email</label>
-                          <input type="email" class="form-control" />
+                          <input type="email" className="form-control"
+                            name="email"
+                            onChange={handleChange}
+                            value={data.email || ""} />
                         </div>
                         <div className="input-group input-group-outline mb-3">
                           <label className="form-label">Số điện thoại</label>
-                          <input type="tel" class="form-control" />
+                          <input type="tel" className="form-control"
+                            name="tel"
+                            onChange={handleChange}
+                            value={data.tel || ""} />
                         </div>
                         <div className="input-group input-group-outline mb-3">
                           <label className="form-label">Địa chỉ hiện tại</label>
-                          <input type="text" class="form-control" />
+                          <input type="text" className="form-control"
+                            name="address"
+                            onChange={handleChange}
+                            value={data.address || ""} />
                         </div>
-                        <div class="input-group input-group-static mb-4">
-                          <label for="exampleFormControlSelect1" class="ms-0">
+                        <div className="input-group input-group-static mb-4">
+                          <label htmlFor="exampleFormControlSelect1" className="ms-0">
                             Khu vực muốn đăng ký làm việc
                           </label>
                           <select
-                            class="form-control"
+                            className="form-control"
                             id="exampleFormControlSelect1"
+                            name="work_area"
+                            onChange={handleChange}
                           >
-                            <option>Quận 1</option>
-                            <option>Quận 2</option>
-                            <option>Quận 3</option>
-                            <option>Quận 4</option>
-                            <option>Quận 5</option>
+                            <option value={"Quận 1"}>Quận 1</option>
+                            <option value={"Quận 2"}>Quận 2</option>
+                            <option value={"Quận 3"}>Quận 3</option>
+                            <option value={"Quận 4"}>Quận 4</option>
+                            <option value={"Quận 5"}>Quận 5</option>
                           </select>
                         </div>
                         <div className="text-center">
                           <button
-                            type="button"
-                            class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0"
+                            type="submit"
+                            className="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0"
+                            style={{ position: "relative" }}
+                            disabled={loading}
                           >
+                            {loading && <Loader />}
                             Đăng ký ứng tuyển
                           </button>
                         </div>
