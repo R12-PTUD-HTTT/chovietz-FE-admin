@@ -3,6 +3,7 @@ import NotFoundPage from "../views/commons/Error/NotFoundPage.jsx";
 import Denied from "../views/commons/Error/Denied.jsx";
 import LoginPage from "../views/commons/Login/LoginPage.jsx";
 import SignupShipper from "../views/shipper/signupShipper/SignupShipper.jsx";
+import SuccessSignupShipper from "../views/shipper/signupShipper/successSignup.jsx";
 
 const commonRoutes = [
   {
@@ -18,6 +19,11 @@ const commonRoutes = [
   {
     path: "/signup/shipper",
     component: () => <SignupShipper />,
+    redirectWhenLogined: true,
+  },
+  {
+    path: "/signup/shipper/success",
+    component: () => <SuccessSignupShipper />,
     redirectWhenLogined: true,
   },
   {

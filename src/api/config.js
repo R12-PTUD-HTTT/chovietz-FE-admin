@@ -25,7 +25,7 @@ javaAPI.interceptors.response.use(
 
 export const cSharpAPI = axios.create({
   baseURL:
-    process.env.CSHARP_BE_API || "https://chovietz-be-csharp.herokuapp.com/",
+    process.env.CSHARP_BE_API || "https://localhost:44336/api/",
   mode: "no-cors",
   cache: "no-cache",
   credentials: "same-origin",

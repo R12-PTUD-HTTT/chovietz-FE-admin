@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { fetchShippingForm } from "../../../api/userApi";
 
@@ -12,9 +11,9 @@ import Loader from "../../../components/LoaderEffect/Loader";
 
 export default function SignupShipper(props) {
   const history = useHistory();
-  const dispatch = useDispatch();
 
   const [error, setError] = useState("");
+  const [typeAlert, setTypeAlert] = useState("warning");
   const [loading, setLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [data, setData] = useState({
@@ -22,8 +21,8 @@ export default function SignupShipper(props) {
     email: "",
     address: "",
     tel: "",
-    work_area: "",
-    gender: "",
+    work_area: "Quận 1",
+    gender: "1",
   });
   const handleChange = (event) => {
     const name = event.target.name;
@@ -34,11 +33,10 @@ export default function SignupShipper(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+    console.log(data);
     try {
       const response = await fetchShippingForm(data);
-      console.log("das");
-        setError(response);
-        setShowAlert(true);
+      history.push('/signup/shipper/success');
     } catch (err) {
       console.log(err);
       setError("Có lỗi trong quá trình tải, vui lòng thử lại sau!");
@@ -52,7 +50,7 @@ export default function SignupShipper(props) {
         message={error}
         isShow={showAlert}
         onClose={setShowAlert}
-        variant="warning"
+        variant={typeAlert}
       />
       <main className="main-content  mt-0">
         <section>
@@ -88,7 +86,7 @@ export default function SignupShipper(props) {
                         </div>
                         <div className="row">
                           <label className="form-label">Giới tính</label>
-                          <div className="form-check mb-3 col">
+                          <div className="form-check mb-3 col is-filled">
                             <input
                               className="form-check-input"
                               type="radio"
