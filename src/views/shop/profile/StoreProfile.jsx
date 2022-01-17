@@ -2,10 +2,10 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { setPageHeder } from "../../../redux/actions/pageAction";
 
-function ShipperDashboard({}) {
+function StoreProfile(props) {
   const dispatch = useDispatch();
-  dispatch(setPageHeder("Dashboard"));
-  return <React.Fragment>Shihpper Dashboard</React.Fragment>;
+  dispatch(setPageHeder("Thông tin cửa hàng"));
+  return <React.Fragment>Store profile</React.Fragment>;
 }
 
-export default ShipperDashboard;
+export default StoreProfile;

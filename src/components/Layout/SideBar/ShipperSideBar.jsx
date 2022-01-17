@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Nav } from "react-bootstrap";
+import favicon from "../../../assets/image/favicon.png";
 function ShipperSideBar(props) {
+  const history = useHistory();
   return (
     <React.Fragment>
       <aside
-        className="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark"
+        className="sidenav navbar navbar-vertical navbar-expand-xs border-0 fixed-start bg-gradient-dark"
         id="sidenav-main"
       >
         <div className="sidenav-header">
@@ -16,13 +19,11 @@ function ShipperSideBar(props) {
           ></i>
           <Link className="navbar-brand m-0" to="" target="_blank">
             <img
-              src="./assets/img/logo-ct.png"
+              src={favicon}
               className="navbar-brand-img h-100"
               alt="main_logo"
             />
-            <span className="ms-1 font-weight-bold text-white">
-              Material Dashboard 2
-            </span>
+            <span className="ms-1 font-weight-bold text-white">CHOVIETZ</span>
           </Link>
         </div>
         <hr className="horizontal light mt-0 mb-2" />
@@ -33,8 +34,12 @@ function ShipperSideBar(props) {
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link
-                className="nav-link text-white active bg-gradient-primary"
-                to="./pages/dashboard.html"
+                className={
+                  history.location.pathname.includes("/shipper/dashboard")
+                    ? "nav-link text-white bg-gradient-primary"
+                    : "nav-link text-white "
+                }
+                to="/shipper/dashboard"
               >
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">dashboard</i>
@@ -42,95 +47,67 @@ function ShipperSideBar(props) {
                 <span className="nav-link-text ms-1">Dashboard</span>
               </Link>
             </li>
+            <Nav.Item className="mt-3">
+              <h6 className="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">
+                Đơn hàng
+              </h6>
+            </Nav.Item>
             <li className="nav-item">
-              <Link className="nav-link text-white " to="./pages/tables.html">
+              <Link
+                className={
+                  history.location.pathname.includes(
+                    "/shipper/delivery/new-order"
+                  )
+                    ? "nav-link text-white bg-gradient-primary"
+                    : "nav-link text-white "
+                }
+                to="/shipper/delivery/new-order"
+              >
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">table_view</i>
                 </div>
-                <span className="nav-link-text ms-1">Tables</span>
+                <span className="nav-link-text ms-1">Giao hàng mới</span>
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white " to="./pages/billing.html">
+              <Link
+                className={
+                  history.location.pathname.includes(
+                    "/shipper/delivery/history"
+                  )
+                    ? "nav-link text-white bg-gradient-primary"
+                    : "nav-link text-white "
+                }
+                to="/shipper/delivery/history"
+              >
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">receipt_long</i>
                 </div>
-                <span className="nav-link-text ms-1">Billing</span>
+                <span className="nav-link-text ms-1">Lịch sử giao hàng</span>
               </Link>
             </li>
+
+            <Nav.Item className="mt-3">
+              <h6 className="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">
+                Cá nhân
+              </h6>
+            </Nav.Item>
             <li className="nav-item">
               <Link
-                className="nav-link text-white "
-                to="./pages/virtual-reality.html"
-              >
-                <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i className="material-icons opacity-10">view_in_ar</i>
-                </div>
-                <span className="nav-link-text ms-1">Virtual Reality</span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white " to="./pages/rtl.html">
-                <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i className="material-icons opacity-10">
-                    format_textdirection_r_to_l
-                  </i>
-                </div>
-                <span className="nav-link-text ms-1">RTL</span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className="nav-link text-white "
-                to="./pages/notifications.html"
+                className={
+                  history.location.pathname?.includes("/shipper/profile")
+                    ? "nav-link text-white bg-gradient-primary"
+                    : "nav-link text-white "
+                }
+                to="/shipper/profile"
               >
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">notifications</i>
                 </div>
-                <span className="nav-link-text ms-1">Notifications</span>
-              </Link>
-            </li>
-            <li className="nav-item mt-3">
-              <h6 className="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">
-                Account pages
-              </h6>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white " to="./pages/profile.html">
-                <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i className="material-icons opacity-10">person</i>
-                </div>
-                <span className="nav-link-text ms-1">Profile</span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white " to="./pages/sign-in.html">
-                <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i className="material-icons opacity-10">login</i>
-                </div>
-                <span className="nav-link-text ms-1">Sign In</span>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white " to="./pages/sign-up.html">
-                <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                  <i className="material-icons opacity-10">assignment</i>
-                </div>
-                <span className="nav-link-text ms-1">Sign Up</span>
+                <span className="nav-link-text ms-1">Thông tin shipper</span>{" "}
               </Link>
             </li>
           </ul>
-        </div>
-        <div className="sidenav-footer position-absolute w-100 bottom-0 ">
-          <div className="mx-3">
-            <Link
-              className="btn bg-gradient-primary mt-4 w-100"
-              to="https://www.creative-tim.com/product/material-dashboard-pro?ref=sidebarfree"
-              type="button"
-            >
-              Upgrade to pro
-            </Link>
-          </div>
         </div>
       </aside>
     </React.Fragment>
