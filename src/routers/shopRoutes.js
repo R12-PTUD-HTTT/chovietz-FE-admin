@@ -5,6 +5,7 @@ import StoreProfile from "../views/shop/profile/StoreProfile";
 import StoreProfit from "../views/shop/Profit/StoreProfit";
 import ShopDashBoard from "../views/shop/ShopDashBoard";
 
+
 const shopRoutes = [
   { path: "/shop/dashboard", component: () => <ShopDashBoard /> },
   { path: "/shop/orders/new-order", component: () => <ListNewOrder /> },
