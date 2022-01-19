@@ -59,7 +59,7 @@ function ShopSideBar(props) {
                     ? "nav-link text-white bg-gradient-primary"
                     : "nav-link text-white "
                 }
-                to="/shop/orders/new-order"
+                to="/shop/orders/new-order?page=1&size=10"
               >
                 <div className="text-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i className="material-icons opacity-10">table_view</i>
