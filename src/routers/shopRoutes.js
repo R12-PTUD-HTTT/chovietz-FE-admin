@@ -7,11 +7,11 @@ import ShopDashBoard from "../views/shop/ShopDashBoard";
 
 
 const shopRoutes = [
-  { path: "/shop/dashboard", component: () => <ShopDashBoard /> },
+  { path: "/shop/dashboard", component: () => <ShopDashBoard />},
   { path: "/shop/orders/new-order", component: () => <ListNewOrder /> },
   { path: "/shop/orders/delivers", component: () => <DeliveredOrder /> },
   { path: "/shop/orders/canceled", component: () => <CanceledOrder /> },
   { path: "/shop/profit", component: () => <StoreProfit /> },
-  { path: "/shop/store/profile", component: () => <StoreProfile /> },
+  { path: "/shop/store/profile", component: () => <StoreProfile />},
 ];
 export default shopRoutes;

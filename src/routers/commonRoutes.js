@@ -4,6 +4,8 @@ import Denied from "../views/commons/Error/Denied.jsx";
 import LoginPage from "../views/commons/Login/LoginPage.jsx";
 import SignupShipper from "../views/shipper/signupShipper/SignupShipper.jsx";
 import SignUpShop from "../views/shop/SignUp/SignUp";
+import ShopStore from "../views/shop/ShopStore/Store.jsx";
+
 const commonRoutes = [
   {
     path: "/",
@@ -23,6 +25,11 @@ const commonRoutes = [
   {
     path: "/signup/shop",
     component: () => <SignUpShop />,
+    redirectWhenLogined: true,
+  },
+  {
+    path: "/shop/store",
+    component: () => <ShopStore />,
     redirectWhenLogined: true,
   },
   {

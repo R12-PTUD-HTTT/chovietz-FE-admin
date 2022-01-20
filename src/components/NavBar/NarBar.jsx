@@ -35,11 +35,14 @@ function HomeNavBar(props) {
                   Home
                 </Link>
               </li>
-              
-              
+              <li className="nav-item">
+                <Link className="nav-link" to="/shop/store">
+                  QL Hang Hoa
+                </Link>
+              </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/signup/shop">
-                  Sign Up
+                  Sign Up for Shop
                 </Link>
               </li>
             </ul>
