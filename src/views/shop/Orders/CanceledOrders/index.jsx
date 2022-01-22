@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import CustomPagination from "../../../../components/pagination/CustomPagination";
 import { setPageHeder } from "../../../../redux/actions/pageAction";
 
 function CanceledOrder(props) {

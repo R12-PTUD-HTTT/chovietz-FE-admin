@@ -4,6 +4,7 @@ import AdminSideBar from "./SideBar/AdminSideBar";
 import Header from "./Header/Header";
 import ShipperSideBar from "./SideBar/ShipperSideBar";
 import ShopSideBar from "./SideBar/ShopSideBar";
+import Footer from "./Footer/Footer";
 
 function RoleLayout(props) {
   const { role, children } = props;
@@ -17,6 +18,7 @@ function RoleLayout(props) {
           <div className="container-fluid">
             <Header />
             <div className="row">{children}</div>
+            <Footer />
           </div>
         </main>
       </div>
