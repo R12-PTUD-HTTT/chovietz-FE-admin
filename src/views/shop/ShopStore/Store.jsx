@@ -8,7 +8,7 @@ export default function ShopStore() {
       <main>
       <div class="container">
         <div class="row">
-            <div class="text-center mb-4"><h1>Sản phẩm của bạn</h1></div>
+            <div class="text-center mb-4 py-4"><h1>Sản phẩm của bạn</h1></div>
             
         </div>
         <div class="row">

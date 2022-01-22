@@ -31,6 +31,8 @@ const commonRoutes = [
   {
     path: "/signup/shipper/success",
     component: () => <SuccessSignupShipper />,
+  },
+  {
     path: "/signup/shop",
     component: () => <SignUpShop />,
     redirectWhenLogined: true,
