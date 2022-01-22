@@ -1,65 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Pagination } from "react-bootstrap";
 
-// Example items, to simulate fetching from another resources.
-const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
-
-function Items({ currentItems }) {
-  return (
-    <>
-      {currentItems &&
-        currentItems.map((item) => (
-          <div>
-            <h3>Item #{item}</h3>
-          </div>
-        ))}
-    </>
-  );
-}
-
-function CustomPagination({ itemsPerPage }) {
-  // We start with an empty list of items.
-  const [currentItems, setCurrentItems] = useState(null);
-  const [pageCount, setPageCount] = useState(0);
-  // Here we use item offsets; we could also use page offsets
-  // following the API or data you're working with.
-  const [itemOffset, setItemOffset] = useState(0);
-
-  useEffect(() => {
-    // Fetch items from another resources.
-    const endOffset = itemOffset + itemsPerPage;
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(items.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(items.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage]);
-
-  // Invoke when user click to request another page.
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
+function CustomPagination({ currentPage, totalPages, handleChangePage }) {
+  const handleClick = (page) => {
+    console.log(currentPage, totalPages);
+    handleChangePage(page);
   };
 
   return (
     <>
       <Pagination>
-        <Pagination.First />
-        <Pagination.Prev />
-        <Pagination.Item>{1}</Pagination.Item>
-        <Pagination.Ellipsis />
-
-        <Pagination.Item>{10}</Pagination.Item>
-        <Pagination.Item>{11}</Pagination.Item>
-        <Pagination.Item active>{12}</Pagination.Item>
-        <Pagination.Item>{13}</Pagination.Item>
-        <Pagination.Item disabled>{14}</Pagination.Item>
-
-        <Pagination.Ellipsis />
-        <Pagination.Item>{20}</Pagination.Item>
-        <Pagination.Next />
-        <Pagination.Last />
+        {currentPage > 0 && <Pagination.First onClick={() => handleClick(0)} />}
+        {currentPage > 0 && (
+          <Pagination.Prev onClick={() => handleClick(currentPage - 1)} />
+        )}
+        {currentPage > 0 && (
+          <Pagination.Item onClick={() => handleClick(currentPage - 1)}>
+            {currentPage}
+          </Pagination.Item>
+        )}
+        <Pagination.Item active>{currentPage + 1}</Pagination.Item>
+        {totalPages > currentPage + 1 && (
+          <Pagination.Item onClick={() => handleClick(currentPage + 1)}>
+            {currentPage + 2}
+          </Pagination.Item>
+        )}
+        {totalPages > currentPage + 1 && (
+          <Pagination.Next onClick={() => handleClick(currentPage + 1)} />
+        )}
+        {totalPages > currentPage + 1 && (
+          <Pagination.Last onClick={() => handleClick(totalPages - 1)} />
+        )}
       </Pagination>
     </>
   );

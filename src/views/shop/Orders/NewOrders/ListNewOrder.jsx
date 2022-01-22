@@ -4,29 +4,25 @@ import { setPageHeder } from "../../../../redux/actions/pageAction";
 import OrderTabel from "../../../../components/OrderTable/OrderTabel";
 import { getNewOrders } from "../../../../api";
 import CustomPagination from "../../../../components/pagination/CustomPagination";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 function ListNewOrder(props) {
   const dispatch = useDispatch();
-  const [page, setPage] = useState(0);
-  const [size, setSize] = useState(10);
   dispatch(setPageHeder("Đơn hàng mới"));
   const [orderList, setOrderList] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    async function fetchOrders() {
-      try {
-        setLoading(true);
-        const { data, status } = await getNewOrders({ page, size });
-        if (status === 200) {
-          console.log(data);
-          setOrderList(data.orders);
-        }
-      } catch {}
-      setLoading(false);
-    }
-    fetchOrders();
+    fetchOrders(0);
   }, []);
+  const fetchOrders = async (page) => {
+    try {
+      setLoading(true);
+      const { data, status } = await getNewOrders({ page, size: 1 });
+      if (status === 200) {
+        setOrderList(data);
+      }
+    } catch {}
+    setLoading(false);
+  };
   return (
     <React.Fragment>
       <div className="container-fluid">
@@ -34,11 +30,18 @@ function ListNewOrder(props) {
           <div className="col-12">
             <div className="card">
               <div className="card-header p-0 position-relative mt-n4 mx-3 z-index-2"></div>
-              {!loading && <OrderTabel orders={orderList} />}
-              <CustomPagination
-                pages={orderList.totalPages}
-                itemsPerPage={10}
-              />
+              <div style={{ minHeight: "70vh" }}>
+                <OrderTabel orders={orderList.orders} />
+              </div>
+              {orderList.orders?.length && (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <CustomPagination
+                    currentPage={orderList.currentPage}
+                    totalPages={orderList.totalPages}
+                    handleChangePage={fetchOrders}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
