@@ -9,3 +9,6 @@ export const getNewOrders = async ({
     `/public/order/shop/2?page=${page}&size=${size}&sortBy=${sortBy}`
   );
 };
+export const getDetailOrder = async (id) => {
+  return await javaAPI.get(`/public/order/${id}`);
+};
