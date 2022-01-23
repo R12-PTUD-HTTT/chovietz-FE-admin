@@ -6,6 +6,7 @@ import RouteWrapper from "./routers/RouterWithRole";
 import * as roles from "./constants/roles";
 import shopRoutes from "./routers/shopRoutes";
 import shipperRoutes from "./routers/shipperRoutes";
+import customerRoutes from "./routers/customerRoutes";
 import commonRoutes from "./routers/commonRoutes";
 import { reloadUserStore } from "./redux/actions/userAction";
 import { useDispatch } from "react-redux";
@@ -45,6 +46,12 @@ function App() {
     role: roles.shipper,
     requiredLogin: true,
   };
+  const renderPageCustomer = {
+    routes: customerRoutes,
+    layout: RoleLayout,
+    role: roles.user,
+    requiredLogin: true,
+  };
   const renderCommonPage = {
     routes: commonRoutes,
     layout: DefaultLayout,
@@ -57,6 +64,7 @@ function App() {
         {RenderPage(renderAdminPage)}
         {RenderPage(renderPageShop)}
         {RenderPage(renderPageShipper)}
+        {RenderPage(renderPageCustomer)}
         {RenderPage(renderCommonPage)}
       </Switch>
     </Router>
