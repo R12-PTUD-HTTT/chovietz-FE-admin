@@ -4,9 +4,13 @@ import moment from "moment";
 import { Dropdown } from "react-bootstrap";
 import { OrderStatus } from "../../constants/order";
 import { updateOrderStatus } from "../../api";
+import CustomAlert from "../../components/Alert/CustomAlert";
 
 function OrderTabel({ orders }) {
   const [orderList, setOrderList] = useState([]);
+  const [message, setMessage] = useState("");
+  const [isShowMessage, setIsShowMessage] = useState("");
+
   useEffect(() => {
     if (orders?.length) {
       setOrderList(orders);
@@ -36,11 +40,16 @@ function OrderTabel({ orders }) {
         setOrderList(newOrderList);
       }
     } catch (error) {
-      console.log(error);
+      setMessage(error);
     }
   };
   return (
     <>
+      <CustomAlert
+        message={message}
+        isShow={isShowMessage}
+        onClose={setIsShowMessage}
+      />
       <div className="card-body px-0 pb-2">
         <div className="table-responsive p-0" style={{ minHeight: "70vh" }}>
           <table className="table align-items-center mb-0">

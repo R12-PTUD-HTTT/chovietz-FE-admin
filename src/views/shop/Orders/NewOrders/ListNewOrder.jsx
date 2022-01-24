@@ -5,6 +5,8 @@ import OrderTabel from "../../../../components/OrderTable/OrderTabel";
 import { getOrdersByType } from "../../../../api";
 import CustomPagination from "../../../../components/pagination/CustomPagination";
 import { TYPE_NEW_ORDER } from "../../../../constants/order";
+import { ImFilesEmpty } from "react-icons/im";
+import Loader from "../../../../components/LoaderEffect/Loader";
 
 function ListNewOrder(props) {
   const dispatch = useDispatch();
@@ -36,9 +38,41 @@ function ListNewOrder(props) {
             <div className="card">
               <div className="card-header p-0 position-relative mt-n4 mx-3 z-index-2"></div>
               <div>
-                <OrderTabel orders={orderList.orders} />
+                {orderList.orders?.length > 0 && (
+                  <OrderTabel orders={orderList.orders} />
+                )}
+                {loading ? (
+                  <div
+                    style={{
+                      textAlign: "center",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minHeight: "70vh",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Loader />
+                  </div>
+                ) : orderList.orders?.length === 0 ? (
+                  <div
+                    style={{
+                      textAlign: "center",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      minHeight: "70vh",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <ImFilesEmpty style={{ fontSize: "1.6em" }} />
+                    <h4>Empty</h4>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
-              {orderList.orders?.length && (
+              {orderList.orders?.length > 0 && (
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <CustomPagination
                     currentPage={orderList.currentPage}

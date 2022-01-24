@@ -39,6 +39,9 @@ function CanceledOrder(props) {
             <div className="card">
               <div className="card-header p-0 position-relative mt-n4 mx-3 z-index-2"></div>
               <div>
+                {orderList.orders?.length > 0 && (
+                  <OrderTabel orders={orderList.orders} />
+                )}
                 {loading ? (
                   <div
                     style={{
@@ -52,9 +55,7 @@ function CanceledOrder(props) {
                   >
                     <Loader />
                   </div>
-                ) : orderList.orders?.length > 0 ? (
-                  <OrderTabel orders={orderList.orders} />
-                ) : (
+                ) : orderList.orders?.length === 0 ? (
                   <div
                     style={{
                       textAlign: "center",
@@ -68,6 +69,8 @@ function CanceledOrder(props) {
                     <ImFilesEmpty style={{ fontSize: "1.6em" }} />
                     <h4>Empty</h4>
                   </div>
+                ) : (
+                  <></>
                 )}
               </div>
               {orderList.orders?.length > 0 && (
