@@ -21,7 +21,7 @@ function RouteWrapper({
   if (requiredLogin && !isLogin) {
     return <Redirect to="/login" />;
   }
-  console.log(role, roleUser, requiredLogin);
+
   if (role !== roleUser && role !== roles.user) {
     return <Redirect to="/denied" />;
   }

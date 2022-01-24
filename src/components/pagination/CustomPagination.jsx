@@ -19,7 +19,7 @@ function CustomPagination({ currentPage, totalPages, handleChangePage }) {
             {currentPage}
           </Pagination.Item>
         )}
-        <Pagination.Item active>{currentPage + 1}</Pagination.Item>
+        {<Pagination.Item active>{currentPage + 1}</Pagination.Item>}
         {totalPages > currentPage + 1 && (
           <Pagination.Item onClick={() => handleClick(currentPage + 1)}>
             {currentPage + 2}

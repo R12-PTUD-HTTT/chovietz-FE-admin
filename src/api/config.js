@@ -24,8 +24,7 @@ javaAPI.interceptors.response.use(
 );
 
 export const cSharpAPI = axios.create({
-  baseURL:
-    process.env.CSHARP_BE_API || "https://localhost:44336/api/",
+  baseURL: process.env.CSHARP_BE_API || "https://localhost:44336/api/",
   mode: "no-cors",
   cache: "no-cache",
   credentials: "same-origin",
@@ -52,10 +51,10 @@ cSharpAPI.interceptors.response.use(
 );
 
 export const getToken = () => {
-  const token = localStorage.getItem("token_dichothuez");
-
+  const user = localStorage.getItem("user");
+  const token = JSON.parse(user)?.token;
   if (token) {
-    return JSON.parse(token);
+    return token;
   }
   return null;
 };
