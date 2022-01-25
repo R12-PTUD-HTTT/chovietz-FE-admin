@@ -9,6 +9,8 @@ import SignUpShop from "../views/shop/SignUp/SignUp";
 import SuccessSignupShop from "../views/shop/SignUp/successSignupShop.jsx";
 
 import ShopStore from "../views/shop/ShopStore/Store.jsx";
+import ShopAddProduct from "../views/shop/AddProduct/AddProduct.jsx";
+import SuccessAddProduct from "../views/shop/AddProduct/AddProductSuccess.jsx";
 
 import ShipperServices from "../views/commons/ShipperServices.jsx/index.jsx";
 import ShopServices from "../views/commons/ShopServices/index.jsx";
@@ -46,6 +48,15 @@ const commonRoutes = [
 
     path: "/shop/store",
     component: () => <ShopStore />,
+  },
+  {
+
+    path: "/shop/add/product",
+    component: () => <ShopAddProduct />,
+  },
+  {
+    path: "/shop/add/product/success",
+    component: () => <SuccessAddProduct />,
   },
   {
     path: "/delivery",

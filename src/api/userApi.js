@@ -12,6 +12,10 @@ export const fetchShopApply = async (data) => {
   return await cSharpAPI.post("/shopapply", data);
 };
 
+export const fetchShopAddProduct = async (data) => {
+  return await cSharpAPI.post("/product", data);
+};
+
 export const getShipperInfor = async (id) => {
   return await javaAPI.get(`/shipper/${id}`);
 };
