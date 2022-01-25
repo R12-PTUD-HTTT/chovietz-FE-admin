@@ -15,7 +15,7 @@ const shipperRoutes = [
     path: "/shipper/delivery/new-order",
     component: () => <NewOrderDelivery />,
   },
-  { path: "/shipper/delivery/:id/detail", component: () => <OrderDetail /> },
+  { path: "/shipper/orders/:id/detail", component: () => <OrderDetail /> },
   {
     path: "/shipper/return-order/:id/create",
     component: () => <ReturnOrder />,

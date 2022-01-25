@@ -1,4 +1,9 @@
 import { javaAPI } from "./config";
+import { cSharpAPI } from "./config";
+
+export const addNewOrder = async (data) => {
+  return await cSharpAPI.post("/order", data);
+};
 
 export const getOrdersShopByType = async ({
   id,
@@ -26,8 +31,8 @@ export const getOrdersShipperByType = async ({
 export const getDetailOrder = async (id) => {
   return await javaAPI.get(`/public/order/${id}`);
 };
-export const updateOrderStatus = async (id, status) => {
-  return await javaAPI.put(`/public/order/${id}`, { status });
+export const updateOrderStatus = async (id, data) => {
+  return await javaAPI.put(`/public/order/${id}/return`, data);
 };
 export const requestReturnOrder = async (data) => {
   return await javaAPI.post(`/return-order`, data);
@@ -38,4 +43,7 @@ export const updateOrderAfterReturn = async (id, data) => {
 
 export const getReturnOrder = async (id) => {
   return await javaAPI.get(`/return-order/${id}`);
+};
+export const updateShipperOfOrder = async (id, data) => {
+  return await javaAPI.get(`/public/order/${id}/shipper`, data);
 };
