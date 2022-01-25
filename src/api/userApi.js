@@ -8,6 +8,10 @@ export const fetchShippingForm = async (data) => {
   return await cSharpAPI.post("/shipappform", data);
 };
 
+export const fetchShopApply = async (data) => {
+  return await cSharpAPI.post("/shopapply", data);
+};
+
 export const getShipperInfor = async (id) => {
   return await javaAPI.get(`/shipper/${id}`);
 };

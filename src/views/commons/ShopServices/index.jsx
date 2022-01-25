@@ -16,6 +16,14 @@ function ShopServices(props) {
             <Link to="/signup/shop">
               <Button variant="success">Đăng ký ngay</Button>
             </Link>
+            <div>Bạn đã có tài khoản?
+            <Link to="/login">
+              <a variant="primary"> Đăng nhập </a>
+               
+            </Link>
+             ngay.
+            </div>
+            
           </div>
         </Col>
         <Col md={6}>
