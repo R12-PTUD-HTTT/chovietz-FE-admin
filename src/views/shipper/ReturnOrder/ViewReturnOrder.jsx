@@ -5,8 +5,12 @@ import moment from "moment";
 import { Button } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { setPageHeder } from "../../../redux/actions/pageAction";
-import { getReturnOrder } from "../../../api";
-import { selectUserId } from "../../../redux/selectors/userSelector";
+import { addNewOrder, getReturnOrder } from "../../../api";
+import {
+  selectRole,
+  selectUserId,
+} from "../../../redux/selectors/userSelector";
+import { shop } from "../../../constants/roles";
 
 const returnOrderTemplate = {
   shipper: {},
@@ -19,7 +23,10 @@ function ViewReturnOrder(props) {
   dispatch(setPageHeder("Yêu cầu đổi trả hàng"));
   const [returnOrder, setReturnOrder] = useState(returnOrderTemplate);
   const [loading, setLoading] = useState(false);
+  const role = useSelector(selectRole);
   const { id } = useParams();
+  const history = useHistory();
+
   useEffect(() => {
     async function fetchReturnOrderDetail() {
       try {
@@ -31,7 +38,15 @@ function ViewReturnOrder(props) {
     }
     id && fetchReturnOrderDetail();
   }, []);
-
+  const handleAddOrder = () => {
+    try {
+      const newOrder = { ...returnOrder.order };
+      const { status, data } = addNewOrder(newOrder);
+      if (status === 200) {
+        history.push(`/${role}/orders/${data.id}/detail`);
+      }
+    } catch {}
+  };
   return (
     <React.Fragment>
       <div className="container-fluid">
@@ -45,6 +60,13 @@ function ViewReturnOrder(props) {
                       className="p-3"
                       controlId="exampleForm.ControlTextarea1"
                     >
+                      {role === shop && (
+                        <div>
+                          <Button variant="success" onClick={handleAddOrder}>
+                            Tạo đơn mới
+                          </Button>
+                        </div>
+                      )}
                       <p>
                         Nguời tạo: <b>{returnOrder.shipper?.name}</b>
                       </p>
@@ -55,7 +77,6 @@ function ViewReturnOrder(props) {
                       <p>
                         Lí do đổi hàng: <b>{returnOrder.reason}</b>
                       </p>
-                      <Form.Label></Form.Label>
                     </Form.Group>
                   </Form>
                 </Col>

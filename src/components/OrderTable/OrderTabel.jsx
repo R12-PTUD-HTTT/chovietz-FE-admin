@@ -2,14 +2,23 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { Dropdown } from "react-bootstrap";
-import { OrderStatus } from "../../constants/order";
+import {
+  OrderStatus,
+  TYPE_CANCELED_ORDER,
+  TYPE_FINISHED_ORDER,
+  TYPE_NEW_ORDER,
+  CANCELED,
+} from "../../constants/order";
 import { updateOrderStatus } from "../../api";
 import CustomAlert from "../../components/Alert/CustomAlert";
+import { useSelector } from "react-redux";
+import { selectRole } from "../../redux/selectors/userSelector";
 
 function OrderTabel({ orders }) {
   const [orderList, setOrderList] = useState([]);
   const [message, setMessage] = useState("");
   const [isShowMessage, setIsShowMessage] = useState("");
+  const role = useSelector(selectRole);
 
   useEffect(() => {
     if (orders?.length) {
@@ -20,20 +29,27 @@ function OrderTabel({ orders }) {
     const currentStatus = OrderStatus.find(
       (item) => item.value === order.status.toLocaleUpperCase()
     );
-
     if (!currentStatus?.id || currentStatus.id >= newIdStatus) {
       return;
     }
 
     const changeStatus = OrderStatus.find((item) => item.id === newIdStatus);
     try {
-      console.log(currentStatus, order);
-      const { status } = await updateOrderStatus(order.id, changeStatus.value);
+      const { status } = await updateOrderStatus(order.id, {
+        return_order_id: order.return_order_id || null,
+        status: changeStatus.value,
+        typeOrder:
+          changeStatus.value === CANCELED.value
+            ? TYPE_CANCELED_ORDER
+            : changeStatus.id > 5
+            ? TYPE_FINISHED_ORDER
+            : TYPE_NEW_ORDER,
+      });
 
       if (status === 200) {
         let newOrderList = orderList.map((item) => {
           if (item.id === order.id) {
-            item.status = changeStatus.label;
+            item.status = changeStatus.value;
           }
           return item;
         });
@@ -77,7 +93,7 @@ function OrderTabel({ orders }) {
                 orderList.map((order, index) => (
                   <tr key={index}>
                     <td>
-                      <Link to={`${order.id}/detail`}>
+                      <Link to={`/${role}/orders/${order.id}/detail`}>
                         <div className="d-flex px-2 py-1">
                           <div>
                             <img
@@ -111,20 +127,41 @@ function OrderTabel({ orders }) {
                           style={{ padding: "5px 7px" }}
                         >
                           <span style={{ fontSize: "10px" }}>
-                            {order.status}
+                            {OrderStatus.find(
+                              (item) => item.value === order.status
+                            )?.label || "NONE"}
                           </span>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                          {OrderStatus.map((status) => (
-                            <Dropdown.Item
-                              key={status.id}
-                              onClick={() => {
-                                handleChaneStatus(order, status.id);
-                              }}
-                            >
-                              {status.label}
-                            </Dropdown.Item>
-                          ))}
+                          {OrderStatus.map((status) => {
+                            let id = OrderStatus.find(
+                              (item) => item.value === order.status
+                            )?.id;
+                            return status.id <= id ? (
+                              <>
+                                <Dropdown.Item
+                                  key={status.id}
+                                  value={status.id}
+                                  onClick={() => {
+                                    handleChaneStatus(order, status.id);
+                                  }}
+                                  disabled={true}
+                                >
+                                  <s> {status.label}</s>
+                                </Dropdown.Item>
+                              </>
+                            ) : (
+                              <Dropdown.Item
+                                key={status.id}
+                                value={status.id}
+                                onClick={() => {
+                                  handleChaneStatus(order, status.id);
+                                }}
+                              >
+                                <b>{status.label}</b>
+                              </Dropdown.Item>
+                            );
+                          })}
                         </Dropdown.Menu>
                       </Dropdown>
                     </td>

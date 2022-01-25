@@ -5,10 +5,9 @@ import moment from "moment";
 import { Button } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { setPageHeder } from "../../../redux/actions/pageAction";
-import { selectUserId } from "../../../redux/selectors/userSelector";
 import { getShipperInfor, updateOrderAfterReturn } from "../../../api";
 import { getDetailOrder, requestReturnOrder } from "../../../api";
-import { RETURN_ORDER, TYPE_FINISHED_ORDER } from "../../../constants/order";
+import { RETURN_ORDER, TYPE_NEW_ORDER } from "../../../constants/order";
 
 const returnOrderTemplate = {
   shipper: {},
@@ -39,7 +38,7 @@ function ReturnOrder() {
             order: data,
             product_return: data.product,
           };
-          console.log("result", returnOrder);
+
           const res = await getShipperInfor(data.shipperID);
           if (res.status === 200) {
             resultOrder = { ...resultOrder, shipper: res.data };
@@ -60,9 +59,9 @@ function ReturnOrder() {
         await updateOrderAfterReturn(order.id, {
           return_order_id: data.id,
           status: RETURN_ORDER.value,
-          typeOrder: TYPE_FINISHED_ORDER,
+          typeOrder: TYPE_NEW_ORDER,
         });
-        history.push(`/shipper/return-order/${data.id}`);
+        history.push(`/return-order/${data.id}`);
       }
     } catch (err) {}
   };

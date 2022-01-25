@@ -1,3 +1,4 @@
+import ViewReturnOrder from "../views/shipper/ReturnOrder/ViewReturnOrder";
 import CanceledOrder from "../views/shop/Orders/CanceledOrders";
 import DeliveredOrder from "../views/shop/Orders/DeliveriedOrder";
 import ListNewOrder from "../views/shop/Orders/NewOrders/ListNewOrder";
@@ -14,6 +15,10 @@ const shopRoutes = [
     path: "/shop/orders/delivers",
     component: () => <DeliveredOrder />,
     exact: true,
+  },
+  {
+    path: "/shop/return-order/:id",
+    component: () => <ViewReturnOrder />,
   },
   {
     path: "/shop/orders/canceled",
