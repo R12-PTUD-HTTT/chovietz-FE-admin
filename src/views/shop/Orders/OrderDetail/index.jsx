@@ -149,7 +149,7 @@ function OrderDetail(props) {
                       })}
                     </Dropdown.Menu>
                   </Dropdown>
-                  {!order.return_order_id && (
+                  {role === shipper && !order.return_order_id && (
                     <Link to={`/shipper/return-order/${order.id}/create`}>
                       <Button>Đổi/trả hàng</Button>
                     </Link>
@@ -212,9 +212,11 @@ function OrderDetail(props) {
                   }
                 </b>
                 {"  "}
-                <Link to={`/${role}/return-order/${order.return_order_id}/`}>
-                  Xem
-                </Link>
+                {order.return_order_id !== null && (
+                  <Link to={`/${role}/return-order/${order.return_order_id}/`}>
+                    Xem
+                  </Link>
+                )}
               </p>
               <p>
                 Khách hàng: <b>{order.customer?.username}</b>

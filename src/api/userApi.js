@@ -19,3 +19,7 @@ export const fetchShopAddProduct = async (data) => {
 export const getShipperInfor = async (id) => {
   return await javaAPI.get(`/shipper/${id}`);
 };
+
+export const getShopInfor = async (id) => {
+  return await javaAPI.get(`/public/shop/${id}`);
+};

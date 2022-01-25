@@ -47,10 +47,8 @@ function ViewReturnOrder(props) {
       const newOrder = { ...returnOrder.order };
       const { status, data } = await addNewOrder(newOrder);
       if (status === 200) {
-        console.log("success", data);
         const res = await addNewOrderForReturnOrder(returnOrder.id, data);
         if (res.status === 200) {
-          console.log("àter", data);
           history.push(`/${role}/orders/${data.Id}/detail`);
         }
       }

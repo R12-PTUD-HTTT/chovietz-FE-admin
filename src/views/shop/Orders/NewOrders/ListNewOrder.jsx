@@ -8,7 +8,7 @@ import CustomPagination from "../../../../components/pagination/CustomPagination
 import { TYPE_NEW_ORDER } from "../../../../constants/order";
 import { ImFilesEmpty } from "react-icons/im";
 import Loader from "../../../../components/LoaderEffect/Loader";
-import { getOrdersShopByType } from "../../../../api";
+import { getOrdersShopByType, getShopInfor } from "../../../../api";
 
 function ListNewOrder(props) {
   const dispatch = useDispatch();
@@ -17,14 +17,27 @@ function ListNewOrder(props) {
 
   const [orderList, setOrderList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [shop, setShop] = useState({});
   useEffect(() => {
-    fetchOrders(0);
+    async function fetchShop() {
+      try {
+        const { status, data } = await getShopInfor(userId);
+        if (status === 200) {
+          setShop(data);
+        }
+      } catch (error) {}
+    }
+    fetchShop();
   }, []);
+  useEffect(() => {
+    shop?.id && fetchOrders(0);
+  }, [shop]);
+
   const fetchOrders = async (page) => {
     try {
       setLoading(true);
       const { data, status } = await getOrdersShopByType({
-        id: userId,
+        id: shop.storeInfo?._id,
         page,
         size: 1,
         typeOrder: TYPE_NEW_ORDER,

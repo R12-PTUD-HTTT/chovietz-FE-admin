@@ -5,7 +5,7 @@ import { selectUserId } from "../../../../redux/selectors/userSelector";
 
 import { setPageHeder } from "../../../../redux/actions/pageAction";
 import OrderTabel from "../../../../components/OrderTable/OrderTabel";
-import { getOrdersShopByType } from "../../../../api";
+import { getOrdersShopByType, getShopInfor } from "../../../../api";
 import CustomPagination from "../../../../components/pagination/CustomPagination";
 import Loader from "../../../../components/LoaderEffect/Loader";
 import { TYPE_CANCELED_ORDER } from "../../../../constants/order";
@@ -16,16 +16,29 @@ function CanceledOrder(props) {
   dispatch(setPageHeder("Đơn hàng bị hủy"));
   const [orderList, setOrderList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [shop, setShop] = useState({});
   useEffect(() => {
-    fetchOrders(0);
+    async function fetchShop() {
+      try {
+        const { status, data } = await getShopInfor(userId);
+        if (status === 200) {
+          setShop(data);
+        }
+      } catch (error) {}
+    }
+    fetchShop();
   }, []);
+  useEffect(() => {
+    shop?.id && fetchOrders(0);
+  }, [shop]);
+
   const fetchOrders = async (page) => {
     try {
       setLoading(true);
       const { data, status } = await getOrdersShopByType({
-        id: userId,
+        id: shop.storeInfo?._id,
         page,
-        size: 1,
+        size: 5,
         typeOrder: TYPE_CANCELED_ORDER,
       });
       console.log(data);
