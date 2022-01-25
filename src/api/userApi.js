@@ -7,7 +7,3 @@ export const fetchLogin = async (data) => {
 export const fetchShippingForm = async (data) => {
   return await cSharpAPI.post("/shipappform", data);
 };
-
-export const getShipperInfor = async (id) => {
-  return await javaAPI.get(`/shipper/${id}`);
-};
