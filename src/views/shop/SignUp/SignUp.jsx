@@ -113,9 +113,12 @@ export default function SignUpShop(props) {
                     required
                   ></input>
                   <label class="form-check-label">
-                    Tôi đồng ý với các <a class="font-weight-bold " href="#" title="Xem Hợp đồng kinh doanh">
+                    Tôi đồng ý với các <Link to="/shop/policy">
+                    <a class="font-weight-bold " title="Xem Hợp đồng kinh doanh">
                       <u> Điều khoản trong hợp đồng kinh doanh</u>
                     </a>
+               
+                </Link>
                   </label>
                 </div>
               </div>

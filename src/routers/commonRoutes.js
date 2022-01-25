@@ -14,6 +14,7 @@ import SuccessAddProduct from "../views/shop/AddProduct/AddProductSuccess.jsx";
 
 import ShipperServices from "../views/commons/ShipperServices.jsx/index.jsx";
 import ShopServices from "../views/commons/ShopServices/index.jsx";
+import ShopPolicy from "../views/shop/Policy/ShopPolicy.jsx";
 
 const commonRoutes = [
   {
@@ -43,6 +44,10 @@ const commonRoutes = [
   {
     path: "/signup/shop/success",
     component: () => <SuccessSignupShop />,
+  },
+  {
+    path: "/shop/policy",
+    component: () => <ShopPolicy />,
   },
   {
 
