@@ -5,7 +5,11 @@ import moment from "moment";
 import { Button } from "react-bootstrap";
 import { useParams, useHistory } from "react-router-dom";
 import { setPageHeder } from "../../../redux/actions/pageAction";
-import { addNewOrder, getReturnOrder } from "../../../api";
+import {
+  addNewOrder,
+  addNewOrderForReturnOrder,
+  getReturnOrder,
+} from "../../../api";
 import {
   selectRole,
   selectUserId,
@@ -38,12 +42,17 @@ function ViewReturnOrder(props) {
     }
     id && fetchReturnOrderDetail();
   }, []);
-  const handleAddOrder = () => {
+  const handleAddOrder = async () => {
     try {
       const newOrder = { ...returnOrder.order };
-      const { status, data } = addNewOrder(newOrder);
+      const { status, data } = await addNewOrder(newOrder);
       if (status === 200) {
-        history.push(`/${role}/orders/${data.id}/detail`);
+        console.log("success", data);
+        const res = await addNewOrderForReturnOrder(returnOrder.id, data);
+        if (res.status === 200) {
+          console.log("àter", data);
+          history.push(`/${role}/orders/${data.Id}/detail`);
+        }
       }
     } catch {}
   };
