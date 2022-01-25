@@ -37,6 +37,9 @@ export const updateOrderStatus = async (id, data) => {
 export const requestReturnOrder = async (data) => {
   return await javaAPI.post(`/return-order`, data);
 };
+export const addNewOrderForReturnOrder = async (id, data) => {
+  return await javaAPI.put(`/return-order/${id}/new-order`, data);
+};
 export const updateOrderAfterReturn = async (id, data) => {
   return await javaAPI.put(`/public/order/${id}/return`, data);
 };
