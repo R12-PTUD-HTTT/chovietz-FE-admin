@@ -6,6 +6,7 @@ import SignupShipper from "../views/shipper/signupShipper/SignupShipper.jsx";
 import SuccessSignupShipper from "../views/shipper/signupShipper/successSignup.jsx";
 
 import SignUpShop from "../views/shop/SignUp/SignUp";
+import SuccessSignupShop from "../views/shop/SignUp/successSignupShop.jsx";
 
 import ShopStore from "../views/shop/ShopStore/Store.jsx";
 
@@ -36,6 +37,10 @@ const commonRoutes = [
     path: "/signup/shop",
     component: () => <SignUpShop />,
     redirectWhenLogined: true,
+  },
+  {
+    path: "/signup/shop/success",
+    component: () => <SuccessSignupShop />,
   },
   {
 
