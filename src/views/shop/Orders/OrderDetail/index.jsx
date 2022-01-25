@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getDetailOrder, getShipperByWorkArea } from "../../../../api/index";
 import { Container, Row, Col } from "react-bootstrap";
 import { formatPrice } from "../../../../Utils/orderHelper";
+import { selectRole } from "../../../../redux/selectors/userSelector";
+import { shipper } from "../../../../constants/roles";
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import {
+  OrderStatus,
+  DELIVERY_FAILED,
+  RETURN_ORDER,
+  CANCELED,
+} from "../../../../constants/order";
+
 function OrderDetail(props) {
   const { id } = useParams();
+  const role = useSelector(selectRole);
   const [loading, setLoading] = useState(false);
   const [shippers, setShippers] = useState([]);
   const [order, setOrder] = useState({});
@@ -48,8 +61,40 @@ function OrderDetail(props) {
               className="card"
               style={{ padding: "10px 20px", minHeight: "80vh" }}
             >
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <p>
+                  Mã đơn hàng: <b>{order.id?.toUpperCase()}</b>
+                </p>
+                {role === shipper && (
+                  <Link
+                    to={
+                      order.return_order_id
+                        ? `/shipper/return-order/${order.id}/`
+                        : `/shipper/return-order/${order.id}/create`
+                    }
+                  >
+                    <Button>Đổi/trả hàng</Button>
+                  </Link>
+                )}
+              </div>
               <p>
-                Mã đơn hàng: <b>{order.id?.toUpperCase()}</b>
+                Tình trạng:{" "}
+                <b
+                  style={{
+                    color:
+                      order.status?.toUpperCase() === DELIVERY_FAILED.value ||
+                      order.status?.toUpperCase() === RETURN_ORDER.value ||
+                      order.status?.toUpperCase() === CANCELED.value
+                        ? "red"
+                        : "green",
+                  }}
+                >
+                  {
+                    OrderStatus.find(
+                      (item) => item.value === order.status?.toUpperCase()
+                    )?.label
+                  }
+                </b>
               </p>
               <p>
                 Khách hàng: <b>{order.customer?.username}</b>
@@ -82,11 +127,18 @@ function OrderDetail(props) {
                       </Col>
                       <Col xs={5}>Tên sản phẩm: {item.name}</Col>
                       <Col xs={5}>
-                        Giá: {formatPrice(item.price)} x SL: {item.quantity}
+                        {!(role === shipper) && (
+                          <>
+                            Giá: {formatPrice(item.price)} x SL: {item.quantity}
+                            <br />
+                            Thành tiền:{" "}
+                            <b style={{ color: "red" }}>
+                              <b>{formatPrice(item.price * item.quantity)} </b>
+                            </b>{" "}
+                            VNĐ
+                          </>
+                        )}
                         <br />
-                        Thành tiền:{" "}
-                        <b> {formatPrice(item.price * item.quantity)} </b>
-                        VNĐ
                       </Col>
                     </Row>
                   </Container>
@@ -98,8 +150,20 @@ function OrderDetail(props) {
                   <Col xs={5}></Col>
                   <Col xs={5}>
                     Tổng hóa đơn:
-                    <b style={{ color: "red" }}> {order.total_price} </b>
-                    VNĐ
+                    {order.is_paid && role === shipper ? (
+                      <>
+                        <b> 0 </b> VNĐ
+                        <b style={{ color: "red" }}> Đã thanh toán</b>
+                      </>
+                    ) : (
+                      <>
+                        <b style={{ color: "red" }}>
+                          {" "}
+                          {formatPrice(order.total_price)}{" "}
+                        </b>{" "}
+                        VNĐ
+                      </>
+                    )}
                   </Col>
                 </Row>
               </Container>

@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserId } from "../../../../redux/selectors/userSelector";
 import { setPageHeder } from "../../../../redux/actions/pageAction";
 import OrderTabel from "../../../../components/OrderTable/OrderTabel";
-import { getOrdersByType } from "../../../../api";
+
 import CustomPagination from "../../../../components/pagination/CustomPagination";
 import { TYPE_NEW_ORDER } from "../../../../constants/order";
 import { ImFilesEmpty } from "react-icons/im";
 import Loader from "../../../../components/LoaderEffect/Loader";
+import { getOrdersShopByType } from "../../../../api";
 
 function ListNewOrder(props) {
   const dispatch = useDispatch();
   dispatch(setPageHeder("Đơn hàng mới"));
+  const userId = useSelector(selectUserId);
+
   const [orderList, setOrderList] = useState([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -19,7 +23,8 @@ function ListNewOrder(props) {
   const fetchOrders = async (page) => {
     try {
       setLoading(true);
-      const { data, status } = await getOrdersByType({
+      const { data, status } = await getOrdersShopByType({
+        id: userId,
         page,
         size: 1,
         typeOrder: TYPE_NEW_ORDER,

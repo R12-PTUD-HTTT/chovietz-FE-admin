@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { ImFilesEmpty } from "react-icons/im";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserId } from "../../../../redux/selectors/userSelector";
+
 import { setPageHeder } from "../../../../redux/actions/pageAction";
 import OrderTabel from "../../../../components/OrderTable/OrderTabel";
-import { getOrdersByType } from "../../../../api";
+import { getOrdersShopByType } from "../../../../api";
 import CustomPagination from "../../../../components/pagination/CustomPagination";
 import Loader from "../../../../components/LoaderEffect/Loader";
 import { TYPE_CANCELED_ORDER } from "../../../../constants/order";
 
 function CanceledOrder(props) {
   const dispatch = useDispatch();
+  const userId = useSelector(selectUserId);
   dispatch(setPageHeder("Đơn hàng bị hủy"));
   const [orderList, setOrderList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -19,7 +22,8 @@ function CanceledOrder(props) {
   const fetchOrders = async (page) => {
     try {
       setLoading(true);
-      const { data, status } = await getOrdersByType({
+      const { data, status } = await getOrdersShopByType({
+        id: userId,
         page,
         size: 1,
         typeOrder: TYPE_CANCELED_ORDER,
