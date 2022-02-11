@@ -1,0 +1,8 @@
+.customStyle {
+  position: absolute;
+  right: 10px;
+  min-width: 300px;
+  max-width: 500px;
+  bottom: 20px;
+  z-index: 1000;
+}
